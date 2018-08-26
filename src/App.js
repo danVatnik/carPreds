@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Header from './components/header';
+import Footer from './components/footer';
+import SearchBar from './components/search-bar';
+import Results from './components/results';
 
 class App extends Component {
   constructor() {
@@ -8,22 +12,20 @@ class App extends Component {
     this.state = { message: '' };
   }
 
-  componentDidMount() {
-    fetch('/api/message')
-      .then(response => response.json())
-      .then(json => this.setState({ message: json }));
-  }
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>{this.state.message}</h2>
+      <div className="container">
+        <Header />
+        <div className="row">
+          <div className="col-3">
+            <SearchBar />
+          </div>
+          <div className="col-9">
+            <Results />
+          </div>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Footer />
       </div>
     );
   }

@@ -22,3 +22,21 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.card {
+  margin-top: 0.5em
+}
+
+.flex-header{
+  display: flex;
+}
+
+.left-side-text{
+  flex-grow: 1;
+}
