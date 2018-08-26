@@ -32,11 +32,6 @@ class LocationModal extends Component {
             radius = this.props.radiusData[0].value;
         }
         this.props.sendDataToParent(this.state.inputZip, radius);
-        
-        // this.setState({
-        //     inputZip: null,
-        //     inputRadius: null
-        // });
     }
     
     handleZipChange(event) {
