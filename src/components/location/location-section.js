@@ -16,6 +16,8 @@ class LocationSection extends Component {
             zip: zip,
             radius: radius
         })
+
+        this.props.setData(zip, radius);
     }
 
     render() {

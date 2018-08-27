@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import SectionModal from '../section-modal';
 
-class LocationModal extends Component {
+class LocationModal extends SectionModal {
     constructor(props) {
         super(props);
 

@@ -1,43 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
+import CheckBoxGrid from '../checkbox-grid';
+import SectionModal from '../section-modal';
 
-class MakeModal extends Component {
+class MakeModal extends SectionModal {
     constructor(props) {
         super(props);
-        this.renderCheckBoxGrid = this.renderCheckBoxGrid.bind(this);
-        this.renderCheckBoxRow = this.renderCheckBoxRow.bind(this);
-        this.renderCheckBox = this.renderCheckBox.bind(this);   
-    }
-    
-    renderCheckBox(item, index){
-        return(
-            <div key={index} class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="check"{...item.name} />
-                <label class="form-check-label" for="defaultCheck1">
-                    {item.name}
-                </label>
-            </div>
-        );
+        this.onCheckBoxClick = this.onCheckBoxClick.bind(this);
+        this.submitToSection = this.submitToSection.bind(this);
+        this.state = { chosenMakes: [] }
     }
 
-    renderCheckBoxRow(data, colsize){
-        return(
-            data.map((item, i) =>{return(<div className={colsize}>{this.renderCheckBox(item, i)}</div>)})
-        );
-    }
-
-    renderCheckBoxGrid(){
-        let ncol = 3;
-        let nRows = Math.ceil(this.props.makeData / ncol);
-        let colsize = "col-" + 12 / ncol;
-        let c = [];
-        for (let i = 0; i < this.props.makeData.length; i=i+ncol) {
-            if(i%ncol == 0){
-                c.push(    
-                    <div className="row">{this.renderCheckBoxRow(this.props.makeData.slice(i, i + ncol), colsize)}</div>
-                );
-            }   
+    onCheckBoxClick(event){
+        let chosenMakes = this.state.chosenMakes;
+        if(event.target.checked){
+            chosenMakes.push({value:event.target.value, name: event.target.name})
         }
-        return(c)
+        else{
+            var index = this.findWithAttr(chosenMakes, "value", event.target.value);
+            if (index > -1) {
+              chosenMakes.splice(index, 1);
+              if(chosenMakes.lengh == 0){
+                  chosenMakes = null;
+              }
+            }  
+        }
+        this.setState({ chosenMakes:chosenMakes });
+    }
+
+    submitToSection(){
+        this.props.submitHandler(this.state.chosenMakes);
     }
 
     render() {
@@ -52,11 +43,11 @@ class MakeModal extends Component {
                             </button>
                         </div>
                         <div className="container">
-                            {this.renderCheckBoxGrid()}
+                            <CheckBoxGrid data={this.props.makeData} nCol={3} onCheckBoxClick={this.onCheckBoxClick}/>
                         </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.submitHandler}>Done</button>
+                                <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={this.submitToSection}>Done</button>
                             </div>
                     </div>
                 </div>

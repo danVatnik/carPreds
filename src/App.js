@@ -12,7 +12,6 @@ class App extends Component {
     this.state = { message: '' };
   }
 
-
   render() {
     return (
       <div className="container">
