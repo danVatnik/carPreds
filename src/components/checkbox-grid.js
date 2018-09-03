@@ -27,8 +27,12 @@ class CheckBoxGrid extends Component {
     }
 
     renderCheckBoxGrid(){
+        if(this.props.data == null){
+            return(null);
+        }
+
         let ncol = this.props.nCol;
-        let nRows = Math.ceil(this.props.data / ncol);
+        let nRows = Math.ceil(this.props.data.length / ncol);
         let colsize = "col-" + 12 / ncol;
         let grid = [];
         for (let i = 0; i < this.props.data.length; i=i+ncol) {

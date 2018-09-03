@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
     "debug": "~2.6.3",
@@ -11,7 +12,9 @@
     "lodash": "^4.17.10",
     "morgan": "^1.8.2",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "request": "^2.88.0",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "concurrently": "^3.5.0",

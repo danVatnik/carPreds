@@ -1,19 +1,40 @@
 import React, { Component } from 'react';
 
 class ModelSelector extends Component {
+    constructor(props) {
+        super(props);
+    }
+    
     render() {
-        return (
-            <div className="card">
-                <h5 className="card-header">Featured</h5>
-                <div className="card-body">
-                    <h5 className="card-title">Special title treatment</h5>
-                    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#model-modal">
-                        Launch demo modal
-                        </button>
+        if(this.props.chosenModels != null && this.props.chosenModels.length > 0){
+            return (
+                <div className="card">
+                    <div className="card-header">
+                        <div className="flex-header">
+                            <h5 className="left-side-text mb-0">Make</h5>
+                            <button type="button" className="btn btn-primary btn-sm" data-toggle="modal" data-target="#model-modal">
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                    <ul className="list-group list-group-flush">
+                        {this.props.chosenModels.map((model, item) => {return(<li className="list-group-item" key={item}>{model.name}</li>)})}
+                    </ul>
                 </div>
-            </div>
-        );
+            );
+        }
+        else{
+            return (
+                <div className="card">
+                    <h5 className="card-header">Model</h5>
+                    <div className="card-body">
+                        <button type="button" className="btn btn-primary center-block" data-toggle="modal" data-target="#model-modal">
+                        Choose Model
+                        </button>
+                    </div>
+                </div>
+            );
+        }
     }
 }
 

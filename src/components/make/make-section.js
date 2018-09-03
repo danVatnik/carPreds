@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import MakeSelector from './make-selector';
 import MakeModal from './make-modal';
-import {makeData} from './make-data';
 
 class MakeSection extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            makeData : makeData,
             chosenMakes : null
          };
 
@@ -23,7 +21,7 @@ class MakeSection extends Component {
         return (
             <div className="make-section">
                 <MakeSelector chosenMakes={this.state.chosenMakes} />
-                <MakeModal makeData={this.state.makeData} submitHandler={this.onModalSubmit}/>
+                <MakeModal makeData={this.props.makeData} submitHandler={this.onModalSubmit}/>
             </div>
         );
     }
