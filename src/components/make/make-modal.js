@@ -16,7 +16,7 @@ class MakeModal extends SectionModal {
             chosenMakes.push({value:event.target.value, name: event.target.name})
         }
         else{
-            var index = this.findWithAttr(chosenMakes, "value", event.target.value);
+            var index = chosenMakes.findIndex(make => make.value === event.target.value);
             if (index > -1) {
               chosenMakes.splice(index, 1);
               if(chosenMakes.lengh == 0){

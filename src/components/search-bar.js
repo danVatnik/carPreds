@@ -20,6 +20,8 @@ export default class SearchBar extends React.Component{
         this.getMakes = this.getMakes.bind(this);
         this.getModels = this.getModels.bind(this);
 
+        this.getCars = this.getCars.bind(this);
+
         this.setLocation = this.setLocation.bind(this);
         this.setMakes = this.setMakes.bind(this);
         this.setModels = this.setModels.bind(this);
@@ -52,7 +54,17 @@ export default class SearchBar extends React.Component{
 
     setModels(chosenModels){
         this.setState({models: chosenModels});
+        if(chosenModels != null && chosenModels.length > 0){
 
+            const params = {
+                zip: this.state.zip,
+                radius: this.state.radius,
+                makes: chosenModels.map(m => m.make),
+                models: chosenModels.map(m => m.value)
+            }
+            
+            this.getCars(params);
+        }
     }
 
     getMakes(location){
@@ -67,12 +79,24 @@ export default class SearchBar extends React.Component{
         var that = this;
         CarsService.getModels(params)
         .then(function(models){
+            models.map((m, i) => {
+                m.map(cm => {cm.make = params.makes[i]});
+            });
             that.setState({modelsData : models});
         });
     }
 
+
+    getCars(params){
+        let that = this;
+        CarsService.getCars(params)
+        .then(function(cars){
+            that.props.setResults(cars);
+        });
+    }
+
     propagateMakes(){
-        
+
     }
 
     render(){

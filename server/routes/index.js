@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var zlib = require('zlib');
-
+let CarDataProvider = require('../car-data-provider');
 
 const baseURL = "https://www.autotrader.com/rest/searchresults/sunset/base"
 
@@ -101,6 +101,58 @@ router.get('/models', function(req, res, next) {
         });
 
   });
+});
+
+router.get('/cars', function(req, res, next) {
+  let params = {
+    startYear: 1981,
+    numRecords: 100000,
+    sortBy: "relevance",
+    firstRecord: 0,
+    endYear: 2019
+  }
+
+  let queryMakes = [];
+  let queryModels = []; 
+  let radius = 50;
+
+  if(req.query.hasOwnProperty("zip"))
+    params.zip = req.query.zip;
+  
+  if(req.query.hasOwnProperty("radius"))
+    radius = req.query.radius;
+
+  if(req.query.hasOwnProperty("makes"))
+    queryMakes = req.query.makes.split(",");
+
+  if(req.query.hasOwnProperty("models"))
+    queryModels = req.query.models.split(",");
+  
+  let carList = [];
+  let promises = [];
+  params.searchRadius = 100;
+  for (let i = 0; i < queryMakes.length; i++) {
+    params.makeCodeList = queryMakes[i];
+    params.modelCodeList = queryModels[i];
+
+    const url = URLBuilder.addQueryParams(baseURL, params);
+    
+    carDataProvider = new CarDataProvider();
+    promises.push(carDataProvider.getCarData(url)
+      .then(function(coeffs){
+        return(carDataProvider.getCars(url, coeffs));
+      })
+    );
+  }
+
+  Promise.all(promises).then(function(cars){
+    cars.map(cm => {cm.map(c => carList.push(c))});
+    carList.sort(function(a, b) {
+      return b.gain - a.gain;
+    });
+  
+    res.json(carList);
+  })
 });
 
 module.exports = router;

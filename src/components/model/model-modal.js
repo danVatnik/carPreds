@@ -40,10 +40,14 @@ class ModelModal extends Component {
     onCheckBoxClick(event){
         let chosenModels = this.state.chosenModels;
         if(event.target.checked){
-            chosenModels.push({value:event.target.value, name: event.target.name})
+            this.props.modelsData.map(m => {
+                m.map(model => {if(model.value === event.target.value){
+                    chosenModels.push(model);
+                }})
+            });
         }
         else{
-            var index = this.findWithAttr(chosenModels, "value", event.target.value);
+            var index = chosenModels.findIndex(model => model.value === event.target.value);
             if (index > -1) {
               chosenModels.splice(index, 1);
               if(chosenModels.lengh == 0){
@@ -62,8 +66,8 @@ class ModelModal extends Component {
     renderCheckBoxes(){
         if(this.props.modelsData != null){
             return(
-                this.props.modelsData.map(m => {
-                    return(<CheckBoxGrid data={m} nCol={3} onCheckBoxClick={this.onCheckBoxClick}/>);
+                this.props.modelsData.map((m, i) => {
+                    return(<CheckBoxGrid key={i} data={m} nCol={3} onCheckBoxClick={this.onCheckBoxClick}/>);
                 })
             );
         }

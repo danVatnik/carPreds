@@ -1,15 +1,27 @@
 import React from 'react'
+import Car from './car';
 
 export default class Results extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+
+        this.renderCar = this.renderCar.bind(this);
+    }
+
+    renderCar(){
+        if(this.props.cars != null){
+            return(this.props.cars.map(c =>{return(<Car carData={c}/>)}));
+        }
+        return(null);
+    }
 
     render(){
         return(
             <div className="card">
-                <h5 className="card-header">Featured</h5>
                 <div className="card-body">
-                    <h5 className="card-title">Special title treatment</h5>
-                    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" className="btn btn-primary">Go somewhere</a>
+                    {this.renderCar()}
                 </div>
             </div>
         );

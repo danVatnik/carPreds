@@ -26,9 +26,9 @@ const URLBuilder = {
     },
 
     formatParam(key, value){
-        if(Array.isArray(value)){
-            value = value.map((v, i) => {if(i > 0){return(`,${v}`)}else{return(v)}})
-        }
+        // if(Array.isArray(value)){
+        //     value = value.map((v, i) => {if(i > 0){return(`,${v}`)}else{return(v)}})
+        // }
         return(`${key}=${value}`)
     }
 }

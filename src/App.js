@@ -10,6 +10,12 @@ class App extends Component {
   constructor() {
     super();
     this.state = { message: '' };
+
+    this.setResults = this.setResults.bind(this);
+  }
+
+  setResults(cars){
+    this.setState({cars: cars});
   }
 
   render() {
@@ -18,10 +24,10 @@ class App extends Component {
         <Header />
         <div className="row">
           <div className="col-3">
-            <SearchBar />
+            <SearchBar setResults={this.setResults}/>
           </div>
           <div className="col-9">
-            <Results />
+            <Results cars={this.state.cars}/>
           </div>
         </div>
         <Footer />
